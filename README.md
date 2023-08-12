@@ -1,0 +1,1 @@
+# Algoritmo_Extracao_Auxiliar_Dados_Horario_Estacao
