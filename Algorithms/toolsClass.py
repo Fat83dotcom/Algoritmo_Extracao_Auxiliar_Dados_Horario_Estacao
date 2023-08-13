@@ -1,9 +1,8 @@
 import os
 import csv
-from pathlib import Path
 from itertools import groupby
 from datetime import datetime, timedelta
-from statistics import mean, median, mode
+from collections import namedtuple
 from DataBaseManager.LogFiles import LogErrorsMixin
 
 
