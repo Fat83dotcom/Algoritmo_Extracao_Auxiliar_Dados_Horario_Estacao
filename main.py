@@ -1,8 +1,21 @@
-from Algorithms import toolsClass
-from DataBaseManager import OperationalDataBase, LogFiles
-from DataGetter import DataGetter
-from GlobalFunctions import UserEmailHandler
+from DataGetter.DataGetter import DBUtils
+from Algorithms.toolsClass import DataProcessor
+from Algorithms.toolsClass import FileRetriever, DataExtractor
+from GlobalFunctions.UserEmailHandler import DBInterfaceConfig
 import os
+
+
+class DBHandler(DBUtils):
+    def __init__(self, DBFile: str, DBName: str) -> None:
+        self.dbName = DBName
+        self.dbFile = DBFile
+        try:
+            self.interfaceConfig = DBInterfaceConfig(self.dbFile)
+            self.interfaceConfig.createTableDataBase()
+            self.result = self.interfaceConfig.selectDBData(self.dbName)
+            super().__init__(self.result)
+        except Exception as e:
+            print(e)
 
 
 class Worker:
