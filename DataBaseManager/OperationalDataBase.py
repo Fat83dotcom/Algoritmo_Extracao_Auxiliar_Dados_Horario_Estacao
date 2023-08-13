@@ -457,8 +457,8 @@ class GerenciadorTabelas(DataModel):
             self.registerErrors(className, methName, e)
             raise e
 
-    def nameTableGenerator(self) -> str:
-        return datetime.now().strftime('%d-%m-%Y')
+    def nameTableGenerator(self, currentDate: datetime) -> str:
+        return date.strftime('%d-%m-%Y')
 
 
 if __name__ == '__main__':
