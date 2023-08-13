@@ -1,4 +1,3 @@
-from time import sleep
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from DataBaseManager.OperationalDataBase import DadoHorario, DataBasePostgreSQL
