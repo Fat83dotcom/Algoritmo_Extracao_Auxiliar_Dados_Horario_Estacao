@@ -25,18 +25,22 @@ class Worker:
     )
 
     def __init__(self) -> None:
-        self.retriever = toolsClass.FileRetriever(self.folderFiles)
+        self.retriever = FileRetriever(self.folderFiles)
+        self.dbUser = DBHandler('EmailUserData.db', 'PostgreSQL')
+
+    def recorderDataDB(self, data: list) -> None:
+        self.dbUser.inicializadorTabelasHorarias()
 
     def run(self) -> None:
         self.retriever._findFiles()
         files = self.retriever.getFoundFiles()
         for currentFile in files:
             try:
-                dE = toolsClass.DataExtractor()
-                # dP = toolsClass.DataProcessor()
+                dE = DataExtractor()
                 dE.extractedDailyData(currentFile, -1)
-                for i in dE.getExtractData():
-                    print(i, '\n')
+                dP = DataProcessor(dE.getExtractData())
+                for i in dP:
+                    print(i)
                 del dE
                 break
             except Exception as e:
