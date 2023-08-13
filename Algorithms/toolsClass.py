@@ -235,8 +235,19 @@ Register = namedtuple(
 
 class DataProcessor(LogErrorsMixin):
     '''Processa os dados e prapara-os para entrar no banco de dados.'''
-    def __init__(self) -> None:
+    def __init__(self, dataTarget: list) -> None:
         super().__init__()
+        self.dataProcessed = [
+            Register(
+                datetime.strptime(dt[0], '%d %b %Y %H:%M:%S'),
+                umi, press, tmpInt, tmpExt
+            )
+            for dt in dataTarget
+            for umi, press, tmpInt, tmpExt in dt[1]
+        ]
+
+    def __getitem__(self, position) -> Register:
+        return self.dataProcessed[position]
 
 
 class DailyDate(LogErrorsMixin):
