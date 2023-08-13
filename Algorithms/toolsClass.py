@@ -194,7 +194,7 @@ class DataExtractor(LogErrorsMixin):
         '''
         def __extractKey(listTarget):
             try:
-                return listTarget[0][:11]
+                return listTarget[0][:20]
             except Exception as e:
                 className = self.__class__.__name__
                 methName = __extractKey.__name__
