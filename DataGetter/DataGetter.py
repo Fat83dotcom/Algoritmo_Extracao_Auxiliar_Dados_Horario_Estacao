@@ -5,9 +5,9 @@ from DataBaseManager.OperationalDataBase import GerenciadorTabelas
 
 
 class DBUtils:
-    def __init__(self, dadosBD: dict, executor: ThreadPoolExecutor) -> None:
+    def __init__(self, dadosBD: dict) -> None:
         self.dadosBD = dadosBD
-        self.executor = executor
+        self.executor = ThreadPoolExecutor(max_workers=10)
         self.dB = DataBasePostgreSQL(self.dadosBD)
         self.dDH = DadoHorario(self.dB)
         self.dGT = GerenciadorTabelas(self.dB)
@@ -28,16 +28,15 @@ class DBUtils:
         except Exception:
             ...
 
-    def verificaHorarioCriacaoTabelaHoraria(self) -> None:
-        now = datetime.now()
+    def checkRegisterDate(self, currentDate: datetime) -> None:
         if now.hour == 0 and now.minute == 0 and now.second == 0:
             self.inicializadorTabelasHorarias()
 
-    def insereBancoDados(self, dadosCarregadosArduino: dict) -> None:
+    def insereBancoDados(self, dataInsert: dict) -> None:
         tableName = self.dGT.nameTableGenerator()
         self.executor.submit(
             self.dDH.execInsertTable,
-            dadosCarregadosArduino,
+            dataInsert,
             table=tableName,
             collumn=(
                 'data_hora', 'umidade', 'pressao', 'temp_int', 'temp_ext'
