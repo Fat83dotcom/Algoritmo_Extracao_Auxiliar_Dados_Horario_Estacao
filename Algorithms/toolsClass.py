@@ -226,6 +226,13 @@ class DataExtractor(LogErrorsMixin):
         return self.__extractData
 
 
+Register = namedtuple(
+    'Register', [
+        'data_hora', 'umidade', 'pressao', 'temp_int', 'temp_ext'
+    ]
+)
+
+
 class DataProcessor(LogErrorsMixin):
     '''Processa os dados e prapara-os para entrar no banco de dados.'''
     def __init__(self) -> None:
