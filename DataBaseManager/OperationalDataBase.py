@@ -364,11 +364,11 @@ class DadoHorario(DataModel):
     ) -> None:
         try:
             data = (
-                args[0]['dt'],
-                args[0]['u'],
-                args[0]['p'],
-                args[0]['1'],
-                args[0]['2']
+                args[0]['data_hora'],
+                args[0]['umidade'],
+                args[0]['pressao'],
+                args[0]['temp_int'],
+                args[0]['temp_ext']
             )
             self.DBInstance.insertTable(
                 data, table=table, collumn=collumn, schema=schema
