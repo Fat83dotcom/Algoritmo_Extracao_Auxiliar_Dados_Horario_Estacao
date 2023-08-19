@@ -416,9 +416,6 @@ class GerenciadorTabelas(DataModel):
             )
             return result
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.execSelectOnTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
     def getForeignKey(self, date: str) -> int:
@@ -449,7 +446,7 @@ if __name__ == '__main__':
         'user': 'fernando',
         'host': '192.168.0.4',
         'port': '5432',
-        'password': '230383asD#'
+        'password': ''
     }
     d = DataBasePostgreSQL(banco)
     t = GerenciadorTabelas(d)
