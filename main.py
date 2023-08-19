@@ -20,6 +20,12 @@ class DBHandler(DBUtils):
         except Exception as e:
             print(e)
 
+    def checkForCreateTable(self, currentDate: str, dataObj: Register) -> str:
+        objDate = dataObj.data_hora
+        checkDate = objDate.strftime('%d-%m-%Y')
+        if currentDate != checkDate:
+            self.initializerTimeTables(checkDate)
+        return checkDate
 
 class Worker:
     folderFiles = os.path.join(
