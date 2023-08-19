@@ -1,8 +1,10 @@
+import os
+from datetime import datetime
 from DataGetter.DataGetter import DBUtils
-from Algorithms.toolsClass import DataProcessor
+from Algorithms.toolsClass import DataProcessor, Register
 from Algorithms.toolsClass import FileRetriever, DataExtractor
 from GlobalFunctions.UserEmailHandler import DBInterfaceConfig
-import os
+from DataBaseManager.LogFiles import LogErrorsMixin, LogTimeMixin
 
 
 class DBHandler(DBUtils):
