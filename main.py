@@ -8,6 +8,7 @@ from DataBaseManager.LogFiles import LogErrorsMixin, LogTimeMixin
 
 
 class DBHandler(DBUtils):
+    '''Integra o banco de dados de credenciais com o banco da estação.'''
     def __init__(self, DBFile: str, DBName: str) -> None:
         self.dbName = DBName
         self.dbFile = DBFile
