@@ -258,9 +258,6 @@ class DataBasePostgreSQL(DataBase, LogErrorsMixin):
             )
             self.toExecute(query)
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.insertTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
     def deleteOnTable(self) -> None:
@@ -278,9 +275,6 @@ class DataBasePostgreSQL(DataBase, LogErrorsMixin):
             )
             return self.toExecuteSelect(query)
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.SQLSelectGenerator.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
 
@@ -362,9 +356,6 @@ class DadoHorario(DataModel):
             REFERENCES gerenciador_tabelas_horarias (codigo))""", ()
             self.DBInstance.toExecute(query)
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.execCreateTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
     def execInsertTable(
@@ -382,9 +373,6 @@ class DadoHorario(DataModel):
                 data, table=table, collumn=collumn, schema=schema
             )
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.execSelectOnTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
     def execSelectOnTable(
@@ -398,9 +386,6 @@ class DadoHorario(DataModel):
             )
             return result
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.execSelectOnTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
 
@@ -416,9 +401,6 @@ class GerenciadorTabelas(DataModel):
                 *args, table=table, collumn=collumn, schema=schema
             )
         except (Error, Exception) as e:
-            className = self.__class__.__name__
-            methName = self.execSelectOnTable.__name__
-            self.registerErrors(className, methName, e)
             raise e
 
     def execSelectOnTable(
