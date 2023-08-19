@@ -1,5 +1,3 @@
-from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
 from DataBaseManager.OperationalDataBase import DadoHorario, DataBasePostgreSQL
 from DataBaseManager.OperationalDataBase import GerenciadorTabelas
 
