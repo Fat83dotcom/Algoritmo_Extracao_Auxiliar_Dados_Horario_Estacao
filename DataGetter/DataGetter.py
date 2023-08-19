@@ -24,14 +24,9 @@ class DBUtils:
         except Exception:
             ...
 
-    def checkRegisterDate(self, currentDate: datetime) -> None:
-        if now.hour == 0 and now.minute == 0 and now.second == 0:
-            self.inicializadorTabelasHorarias()
-
-    def insereBancoDados(self, dataInsert: dict) -> None:
-        tableName = self.dGT.nameTableGenerator()
-        self.executor.submit(
-            self.dDH.execInsertTable,
+    def insertDB(self, dataInsert: dict, tableName: str) -> None:
+        tableName = self.dGT.nameTableGenerator(tableName)
+        self.dDH.execInsertTable(
             dataInsert,
             table=tableName,
             collumn=(
