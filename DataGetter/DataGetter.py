@@ -9,9 +9,9 @@ class DBUtils:
         self.dDH = DadoHorario(self.dB)
         self.dGT = GerenciadorTabelas(self.dB)
 
-    def inicializadorTabelasHorarias(self) -> None:
+    def initializerTimeTables(self, date: str) -> None:
         try:
-            tableName = self.dGT.nameTableGenerator()
+            tableName = self.dGT.nameTableGenerator(date)
             self.dGT.execInsertTable(
                 (tableName,),
                 table='gerenciador_tabelas_horarias',
