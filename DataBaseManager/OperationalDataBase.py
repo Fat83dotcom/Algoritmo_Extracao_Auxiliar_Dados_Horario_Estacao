@@ -353,7 +353,8 @@ class DadoHorario(DataModel):
             temp_int double precision null,
             temp_ext double precision null,
             FOREIGN KEY (codigo_gerenciador)
-            REFERENCES gerenciador_tabelas_horarias (codigo))""", ()
+            REFERENCES gerenciador_tabelas_horarias (codigo)
+            ON DELETE CASCADE)""", ()
             self.DBInstance.toExecute(query)
         except (Error, Exception) as e:
             raise e
