@@ -27,7 +27,30 @@ class DBHandler(DBUtils):
             self.initializerTimeTables(checkDate)
         return checkDate
 
-class Worker:
+
+class TableDateHandler:
+    '''Guarda o estado das datas.'''
+    def __init__(self) -> None:
+        self.__currentDate = '01-01-2000'
+
+    def __str__(self) -> str:
+        return f'{self.__currentDate}'
+
+    @property
+    def currentDate(self) -> str:
+        return self.__currentDate
+
+    @currentDate.setter
+    def setCurrentDate(self, date: str) -> None:
+        self.__currentDate = date
+
+    def checkRegisterDate(self, currentDate: datetime) -> None:
+        checkCurrentDate = currentDate.strftime('%d-%m-%Y')
+        if checkCurrentDate != currentDate:
+            self.setCurrentDate = checkCurrentDate
+
+
+class Worker(LogErrorsMixin, LogTimeMixin):
     folderFiles = os.path.join(
         '/home', 'fernando', 'Área de Trabalho',
         'Projeto_Estacao', 'csv_estacao'
