@@ -58,25 +58,44 @@ class Worker(LogErrorsMixin, LogTimeMixin):
 
     def __init__(self) -> None:
         self.retriever = FileRetriever(self.folderFiles)
-        self.dbUser = DBHandler('EmailUserData.db', 'PostgreSQL')
-
-    def recorderDataDB(self, data: list) -> None:
-        self.dbUser.inicializadorTabelasHorarias()
+        self.handlerDates = TableDateHandler()
+        self.userDBName = 'EmailUserData.db'
+        self.mainDBName = 'Oracle'
 
     def run(self) -> None:
-        self.retriever._findFiles()
-        files = self.retriever.getFoundFiles()
-        for currentFile in files:
-            try:
+        try:
+            self.registerTimeLogStart()
+            self.retriever._findFiles()
+            files = self.retriever.getFoundFiles()
+            for currentFile in files:
+                print(currentFile)
                 dE = DataExtractor()
                 dE.extractedDailyData(currentFile, -1)
                 dP = DataProcessor(dE.getExtractData())
-                for i in dP:
-                    print(i)
+                dbUser = DBHandler(self.userDBName, self.mainDBName)
+                startTime = self.snapshotTime()
+                for register in dP:
+                    try:
+                        nameTable: str = dbUser.checkForCreateTable(
+                            self.handlerDates.currentDate, register
+                        )
+                        dbUser.insertDB(register._asdict(), nameTable)
+                        self.handlerDates.checkRegisterDate(
+                            register.data_hora
+                        )
+                    except Exception as e:
+                        className = self.__class__.__name__
+                        methName = self.run.__name__
+                        self.registerErrors(className, methName, e)
                 del dE
-                break
-            except Exception as e:
-                print(e)
+                del dP
+                endTime = self.snapshotTime()
+                self.registerTimeElapsed(startTime, endTime)
+            self.registerTimeLogEnd()
+        except Exception as e:
+            className = self.__class__.__name__
+            methName = self.run.__name__
+            self.registerErrors(className, methName, e)
 
 
 if __name__ == '__main__':
