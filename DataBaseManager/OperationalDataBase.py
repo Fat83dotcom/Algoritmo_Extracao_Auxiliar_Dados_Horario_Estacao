@@ -421,14 +421,14 @@ class GerenciadorTabelas(DataModel):
             self.registerErrors(className, methName, e)
             raise e
 
-    def getForeignKey(self) -> int:
+    def getForeignKey(self, date: str) -> int:
         '''select codigo from gerenciador_tabelas_horarias
         order by codigo desc limit 1;
         '''
         try:
             result: list = self.execSelectOnTable(
                 collumns=('codigo',), table='gerenciador_tabelas_horarias',
-                conditionLiteral='ORDER BY codigo DESC LIMIT 1',
+                conditionLiteral=f"WHERE data_tabela='{date}'",
                 collCodiction='', condiction=''
             )
             resultInt: int = result[0][0]
